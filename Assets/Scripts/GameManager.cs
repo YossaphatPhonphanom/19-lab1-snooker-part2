@@ -17,10 +17,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float xInput;
     [SerializeField] private float force;
+
+    [SerializeField] private GameObject camera;
     
     // Start is called before the first frame update
     void Start()
     {
+        
+        camera = Camera.main.gameObject;
+        CameraBehindBall();
+        
         instance = this;
         
         //set balls on the table
@@ -69,5 +75,12 @@ public class GameManager : MonoBehaviour
         Rigidbody rd = cueBall.GetComponent<Rigidbody>();
         rd.AddRelativeForce(Vector3.forward * force,ForceMode.Impulse);
         ballline.SetActive(false);
+    }
+
+    void CameraBehindBall()
+    {
+        camera.transform.parent = cueBall.transform;
+        camera.transform.position = cueBall.transform.position + new Vector3(0, 20f, -15);
+        
     }
 }
